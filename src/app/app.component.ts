@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
 
   private loop(_this: any) {
     fabric.util.requestAnimFrame(function render() {
-      console.log('render');
+      // console.log('render');
       _this.canvas.requestRenderAll();
       fabric.util.requestAnimFrame(render);
     });
@@ -96,18 +96,17 @@ export class AppComponent implements OnInit {
 
 
   private testTransitions() {
-    const canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
-    canvas.width = 500;
-    canvas.height = 400;
-    canvas.style.position = 'absolute';
-    canvas.style.top = '0';
-    canvas.style.zIndex = '9999999';
-    
+    // const canvas = document.createElement('canvas');
+    // document.body.appendChild(canvas);
+    // canvas.width = 500;
+    // canvas.height = 400;
+    // canvas.style.position = 'absolute';
+    // canvas.style.top = '0';
+    // canvas.style.zIndex = '9999999';
 
-    const gl = canvas.getContext("webgl");
-    if(!gl){
-      console.log('No GL')
+    const gl = this.canvas.getContext('webgl');
+    if (!gl) {
+      console.log('No GL');
       return;
     }
     const canvasObjects = this.canvas.getObjects();
@@ -121,17 +120,23 @@ export class AppComponent implements OnInit {
         gl.STATIC_DRAW
       );
       gl.viewport(0, 0, 500, 500);
-    
+
       const from = createTexture(gl, canvasVideos[0]);
       from.minFilter = gl.LINEAR;
       from.magFilter = gl.LINEAR;
-    
+
       const to = createTexture(gl, canvasVideos[1]);
       to.minFilter = gl.LINEAR;
       to.magFilter = gl.LINEAR;
-    
-      const transition = createTransition(gl, transitions.find((t: any) => t.name === "cube")); // https://github.com/gl-transitions/gl-transitions/blob/master/transitions/cube.glsl
-      transition.draw(5, from, to, canvas.width, canvas.height, { persp: 1.5, unzoom: 0.6 });
+
+      const transition = createTransition(
+        gl,
+        transitions.find((t: any) => t.name === 'cube')
+      ); // https://github.com/gl-transitions/gl-transitions/blob/master/transitions/cube.glsl
+      transition.draw(5, from, to, this.canvas.width, this.canvas.height, {
+        persp: 1.5,
+        unzoom: 0.6,
+      });
     });
   }
 }
