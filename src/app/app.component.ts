@@ -115,6 +115,7 @@ export class AppComponent implements OnInit {
     }
     const canvasObjects = this.canvas.getObjects();
     Promise.all(canvasObjects).then((canvasVideos) => {
+      // gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       const buffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
