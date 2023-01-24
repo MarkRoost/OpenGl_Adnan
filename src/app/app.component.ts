@@ -21,7 +21,7 @@ import transitions from 'gl-transitions';
 
 export class AppComponent implements OnInit {
   title = 'gl-test-app';
-  canvas: fabric.Canvas;
+  canvas: fabric.Canvas | undefined;
   videos = [
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
@@ -104,7 +104,11 @@ export class AppComponent implements OnInit {
     // canvas.style.top = '0';
     // canvas.style.zIndex = '9999999';
 
-    const gl = this.canvas.getContext('webgl');
+    if (!this.canvas) {
+      console.log("return");
+      return};
+    // const gl : any = this.canvas.getContext('webgl');  
+    const gl : any = this.canvas.getContext();
     if (!gl) {
       console.log('No GL');
       return;
@@ -133,6 +137,9 @@ export class AppComponent implements OnInit {
         gl,
         transitions.find((t: any) => t.name === 'cube')
       ); // https://github.com/gl-transitions/gl-transitions/blob/master/transitions/cube.glsl
+      if (!this.canvas) {
+        console.log("return");
+        return};
       transition.draw(5, from, to, this.canvas.width, this.canvas.height, {
         persp: 1.5,
         unzoom: 0.6,
